@@ -1,0 +1,25 @@
+{
+  "name": "cdta",
+  "version": "1.0.0",
+  "description": "Simple library for the CDTA API",
+  "main": "index.js",
+  "scripts": {
+    "test": "start"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/ansonfoong/CDTA.js.git"
+  },
+  "keywords": [
+    "api",
+    "cdta",
+    "javascript",
+    "nodejs"
+  ],
+  "author": "Anson Foong",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/ansonfoong/CDTA.js/issues"
+  },
+  "homepage": "https://github.com/ansonfoong/CDTA.js#readme"
+}

@@ -1,0 +1,1 @@
+const CDTA = require('./index');
