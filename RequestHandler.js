@@ -5,9 +5,9 @@ const { API, FIELDS } = require('./Constants');
 
 module.exports = class RequestHandler extends EventEmitter {
 
-    static async checkStatus()
+    static async checkStatus(token)
     {
-        const response = await fetch(URL);
+        const response = await fetch(API + 'ping&key=' + token);
         if(response.status == 200)
         {
             const json = JSON.parse(await response.text());
@@ -17,7 +17,7 @@ module.exports = class RequestHandler extends EventEmitter {
     }
     static async get(field, token, ...args)
     {
-        var response = null;
+        var response = null, url = null;
         switch(field)
         {
             case FIELDS.TIME:
@@ -39,15 +39,16 @@ module.exports = class RequestHandler extends EventEmitter {
                 }
                 break;
             case FIELDS.DIRECTIONS:
-                var url = API + FIELDS.DIRECTIONS + "/" + args[0] + "&key=" + token;
+                url = API + FIELDS.DIRECTIONS + "/" + args[0] + "&key=" + token;
                 response = await fetch(url);
                 return JSON.parse(await response.text());
                 break;
             case FIELDS.SCHEDULES:
-                var url = API + FIELDS.SCHEDULES + "/" + args[0] + "/" + args[1] + "/" + args[2] + "&key=" + token;
+                url = API + FIELDS.SCHEDULES + "/" + args[0] + "/" + args[1] + "/" + args[2] + "&key=" + token;
                 return JSON.parse(await (await fetch(url)).text());
             case FIELDS.STOPS:
-                break;
+                url = API + FIELDS.STOPS + "/" + args[0] + "/" + args[1] + "&key=" + token;
+                return JSON.parse(await (await fetch(url)).text());
             case FIELDS.NEAR_STOPS:
                 break;
             case FIELDS.SEARCH_STOPS:

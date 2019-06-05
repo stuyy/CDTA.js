@@ -16,7 +16,7 @@ module.exports = class CDTAClient extends EventEmitter {
     }
     authorize()
     {
-        Request.checkStatus().then(() => {
+        Request.checkStatus(this.token).then(() => {
             this.emit("authorized");
         }).catch(err => this.emit('error', err));
     }
@@ -65,8 +65,17 @@ module.exports = class CDTAClient extends EventEmitter {
                         return Promise.reject("Must specify route_id, service_type, and direction_id");
                     else
                         return await Request.get(FIELDS.SCHEDULES, this.token, args[0], args[1], args[2]);
+                /**
+                 * Params:
+                 * route_id? - Route Identifier
+                 * direction? - Direction for route
+                 * NOTE: If no params are specified, call endpoint and cache the data.
+                 */
                 case FIELDS.STOPS:
-                    break;
+                    if(args.length != 2)
+                        return Promise.reject("Must specify route_id, direction_id");
+                    else
+                        return await Request.get(FIELDS.STOPS, this.token, args[0], args[1])
                 case FIELDS.NEAR_STOPS:
                     break;
                 case FIELDS.SEARCH_STOPS:
