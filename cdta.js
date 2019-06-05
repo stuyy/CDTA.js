@@ -31,7 +31,13 @@ module.exports = class CDTAClient extends EventEmitter {
                     response = await Request.get(FIELDS.TIME, this.token);
                     return response;
                 case FIELDS.ROUTES:
-                    response = await Request.get(FIELDS.ROUTES, this.token);
+                    if(args.length == 0)
+                        response = await Request.get(FIELDS.ROUTES, this.token);
+                    else if(args.length == 1)
+                        response = await Request.get(FIELDS.ROUTES, this.token, args[0]);
+                    else {
+                        return Promise.reject("Too many args.");
+                    }
                     return response;
                 case FIELDS.DIRECTIONS:
                     break;

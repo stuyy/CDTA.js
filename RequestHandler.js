@@ -27,8 +27,16 @@ module.exports = class RequestHandler extends EventEmitter {
                 else if(response.status == 401)
                     return Promise.reject(new Error("Invalid API Key"));
             case FIELDS.ROUTES:
-                response = await fetch(API + 'routes/12' + '&key=' + token);
-                return JSON.parse(await response.text());
+                if(args.length == 0) // Return all routes.
+                {
+                    response = await fetch(API + 'routes' + '&key=' + token);
+                    return JSON.parse(await response.text());
+                }
+                else if(args.length == 1)
+                {
+                    response = await fetch(API + 'routes' + '&key=' + token);
+                    return JSON.parse(await response.text());
+                }
                 break;
             case FIELDS.DIRECTIONS:
                 break;

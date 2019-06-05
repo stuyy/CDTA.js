@@ -9,6 +9,6 @@ app.get('time')
 .then(res => console.log(res))
 .catch(err => console.log(err));
 
-app.get('routes')
-.then(res => console.log(res))
+app.get('routes', 12, 1)
+.then(res => console.log('done'))
 .catch(err => console.log(err));
