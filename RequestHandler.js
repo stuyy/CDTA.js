@@ -39,6 +39,9 @@ module.exports = class RequestHandler extends EventEmitter {
                 }
                 break;
             case FIELDS.DIRECTIONS:
+                let url = API + FIELDS.DIRECTIONS + "/" + args[0] + "&key=" + token;
+                response = await fetch(url);
+                return JSON.parse(await response.text());
                 break;
             case FIELDS.SCHEDULES:
                 break;
