@@ -76,20 +76,57 @@ module.exports = class CDTAClient extends EventEmitter {
                         return Promise.reject("Must specify route_id, direction_id");
                     else
                         return await Request.get(FIELDS.STOPS, this.token, args[0], args[1])
+                /**
+                 * Params:
+                 * latitude - Latitude of area
+                 * longitude - longitude of area
+                 * number_of_stops? - total stops to return, default 10
+                 */
                 case FIELDS.NEAR_STOPS:
                     if(args.length == 2) // User only specified latitude and longitude
-                        return await Request.get(FIELDS.NEAR_STOPS, this.token, args[0], args[1]);
+                        return await Request.get(FIELDS.NEAR_STOPS, this.token, args[0], args[1], 10);
                     else if(args.length == 3)
                         return await Request.get(FIELDS.NEAR_STOPS, this.token, args[0], args[1], args[2]);
                     else
                         return Promise.reject("Invalid amount of arguments. Must provide latitude, longitude, and/or number_of_stops");
                 
+                /**
+                 * Params:
+                 * search_term - text or number to be searched for
+                 */
                 case FIELDS.SEARCH_STOPS:
-                    break;
+                    if(args.length != 1)
+                        return Promise.reject("Must provide a search term");
+                    else
+                        return await Request.get(FIELDS.SEARCH_STOPS, this.token, args[0]);
+
+                /**
+                 * Params:
+                 * search_term - text or number to search for, e.g: routes, stops, landmarks
+                 * result_count? - amount of items to return, default is all
+                 */
                 case FIELDS.SEARCH:
-                    break;
+                    if(args.length ==  1)
+                        return await Request.get(FIELDS.SEARCH, this.token, args[0]);
+                    else if(args.length == 2)
+                        return await Request.get(FIELDS.SEARCH, this.tokens, args[0], args[1]);
+                    else
+                        return Promise.reject("Invalid arguments. Must provide search_term, and/or result_count");
+                /**
+                 * Params:
+                 * stop_id - stop identifier
+                 * number_of_arrivals? - amount of arrivals to return per route, default 5
+                 */
                 case FIELDS.ARRIVALS:
-                    break;
+                    if(args.length == 1)
+                        return await Request.get(FIELDS.ARRIVALS, this.token, args[0]);
+                    else
+                        return await Request.get(FIELDS.ARRIVALS, this.tokens, args[0], args[1]);
+                /**
+                 * No params
+                 */
+                case FIELDS.ALERTS:
+                    return await Request.get(FIELDS.ALERTS, this.token);
             }
         }
         catch(ex)

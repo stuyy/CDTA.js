@@ -50,9 +50,11 @@ module.exports = class RequestHandler extends EventEmitter {
                 url = API + FIELDS.STOPS + "/" + args[0] + "/" + args[1] + "&key=" + token;
                 return JSON.parse(await (await fetch(url)).text());
             case FIELDS.NEAR_STOPS:
-                break;
+                url = API + FIELDS.NEAR_STOPS + "/" + args[0] + "/" + args[1] + "/" + args[2] + "&key=" + token;
+                return JSON.parse(await (await fetch(url)).text());
             case FIELDS.SEARCH_STOPS:
-                break;
+                url = API + FIELDS.SEARCH_STOPS + "/" + args[0] + "&key=" + token;
+                return JSON.parse(await (await fetch(url)).text());
             case FIELDS.SEARCH:
                 break;
             case FIELDS.ARRIVALS:
