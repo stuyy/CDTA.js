@@ -9,6 +9,14 @@ app.get('time')
 .then(res => console.log(res))
 .catch(err => console.log(err));
 
-app.get('routes', 712)
+// app.get('routes', 712)
+// .then(res => console.log(res))
+// .catch(err => console.log(err));
+
+// app.get('directions', 12)
+// .then(res => console.log(res))
+// .catch(err => console.log(err));
+
+app.get('schedules', 12, 'weekday', 0)
 .then(res => console.log(res))
 .catch(err => console.log(err));

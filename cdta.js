@@ -54,8 +54,17 @@ module.exports = class CDTAClient extends EventEmitter {
                         return await Request.get(FIELDS.DIRECTIONS, this.token, args[0]);
                     else
                         return Promise.reject("Invalid arguments provided.");
+                /**
+                 * Params:
+                 * route_id - Route Identifier
+                 * service_type - Service type for route (Weekday, Saturday, Sunday)
+                 * direction_id - direction of route (0 or 1)
+                 */
                 case FIELDS.SCHEDULES:
-                    break;
+                    if(args.length != 3)
+                        return Promise.reject("Must specify route_id, service_type, and direction_id");
+                    else
+                        return await Request.get(FIELDS.SCHEDULES, this.token, args[0], args[1], args[2]);
                 case FIELDS.STOPS:
                     break;
                 case FIELDS.NEAR_STOPS:

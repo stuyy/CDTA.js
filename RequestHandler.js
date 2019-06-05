@@ -39,12 +39,13 @@ module.exports = class RequestHandler extends EventEmitter {
                 }
                 break;
             case FIELDS.DIRECTIONS:
-                let url = API + FIELDS.DIRECTIONS + "/" + args[0] + "&key=" + token;
+                var url = API + FIELDS.DIRECTIONS + "/" + args[0] + "&key=" + token;
                 response = await fetch(url);
                 return JSON.parse(await response.text());
                 break;
             case FIELDS.SCHEDULES:
-                break;
+                var url = API + FIELDS.SCHEDULES + "/" + args[0] + "/" + args[1] + "/" + args[2] + "&key=" + token;
+                return JSON.parse(await (await fetch(url)).text());
             case FIELDS.STOPS:
                 break;
             case FIELDS.NEAR_STOPS:
