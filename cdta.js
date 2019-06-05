@@ -1,5 +1,6 @@
 const EventEmitter = require('events');
 const Request = require('./RequestHandler');
+const Constants = require('./Constants');
 
 module.exports = class CDTAClient extends EventEmitter {
     constructor(token = null)
@@ -18,5 +19,19 @@ module.exports = class CDTAClient extends EventEmitter {
         Request.checkStatus().then(() => {
             this.emit("authorized");
         }).catch(err => this.emit('error', err));
+    }
+    async get(field, ...args)
+    {
+        if(field === 'time')
+        {
+            try {
+                const response = await Request.get(this.token);
+                return response;
+            } 
+            catch(ex)
+            {
+                return Promise.reject(ex);
+            }
+        }
     }
 }
