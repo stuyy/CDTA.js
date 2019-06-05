@@ -1,6 +1,6 @@
 const EventEmitter = require('events');
 const Request = require('./RequestHandler');
-const Constants = require('./Constants');
+const { API, FIELDS } = require('./Constants');
 
 module.exports = class CDTAClient extends EventEmitter {
     constructor(token = null)
@@ -22,16 +22,36 @@ module.exports = class CDTAClient extends EventEmitter {
     }
     async get(field, ...args)
     {
-        if(field === 'time')
+        try
         {
-            try {
-                const response = await Request.get(this.token);
-                return response;
-            } 
-            catch(ex)
+            var response = null;
+            switch(field)
             {
-                return Promise.reject(ex);
+                case FIELDS.TIME:
+                    response = await Request.get(FIELDS.TIME, this.token);
+                    return response;
+                case FIELDS.ROUTES:
+                    response = await Request.get(FIELDS.ROUTES, this.token);
+                    return response;
+                case FIELDS.DIRECTIONS:
+                    break;
+                case FIELDS.SCHEDULES:
+                    break;
+                case FIELDS.STOPS:
+                    break;
+                case FIELDS.NEAR_STOPS:
+                    break;
+                case FIELDS.SEARCH_STOPS:
+                    break;
+                case FIELDS.SEARCH:
+                    break;
+                case FIELDS.ARRIVALS:
+                    break;
             }
+        }
+        catch(ex)
+        {
+            return Promise.reject(ex);
         }
     }
 }

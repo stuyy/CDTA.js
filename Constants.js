@@ -1,5 +1,5 @@
 const API = "http://api.cdta.org/api/v1/?request=";
-const ROUTES = {
+const FIELDS = {
     TIME: 'time',
     ROUTES: 'routes',
     DIRECTIONS: 'directions',
@@ -11,4 +11,4 @@ const ROUTES = {
     ARRIVALS: 'arrivals',
     ALERTS: 'alerts'
 }
-module.exports = { API };
+module.exports = { API, FIELDS };

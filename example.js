@@ -8,3 +8,7 @@ app.on('error', err =>{
 app.get('time')
 .then(res => console.log(res))
 .catch(err => console.log(err));
+
+app.get('routes')
+.then(res => console.log(res))
+.catch(err => console.log(err));
