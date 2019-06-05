@@ -77,7 +77,13 @@ module.exports = class CDTAClient extends EventEmitter {
                     else
                         return await Request.get(FIELDS.STOPS, this.token, args[0], args[1])
                 case FIELDS.NEAR_STOPS:
-                    break;
+                    if(args.length == 2) // User only specified latitude and longitude
+                        return await Request.get(FIELDS.NEAR_STOPS, this.token, args[0], args[1]);
+                    else if(args.length == 3)
+                        return await Request.get(FIELDS.NEAR_STOPS, this.token, args[0], args[1], args[2]);
+                    else
+                        return Promise.reject("Invalid amount of arguments. Must provide latitude, longitude, and/or number_of_stops");
+                
                 case FIELDS.SEARCH_STOPS:
                     break;
                 case FIELDS.SEARCH:
