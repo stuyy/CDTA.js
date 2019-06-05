@@ -34,7 +34,7 @@ module.exports = class RequestHandler extends EventEmitter {
                 }
                 else if(args.length == 1)
                 {
-                    response = await fetch(API + 'routes' + '&key=' + token);
+                    response = await fetch(API + 'routes/' + args[0] + '&key=' + token);
                     return JSON.parse(await response.text());
                 }
                 break;
