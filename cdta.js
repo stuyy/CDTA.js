@@ -30,7 +30,11 @@ module.exports = class CDTAClient extends EventEmitter {
                 case FIELDS.TIME:
                     response = await Request.get(FIELDS.TIME, this.token);
                     return response;
-                case FIELDS.ROUTES:
+                /**
+                 * Params:
+                 * route_id? - route identifier
+                 */
+                case FIELDS.ROUTES: 
                     if(args.length == 0)
                         response = await Request.get(FIELDS.ROUTES, this.token);
                     else if(args.length == 1)
@@ -38,8 +42,18 @@ module.exports = class CDTAClient extends EventEmitter {
                     else 
                         return Promise.reject("Too many args.");
                     return response;
+                /**
+                 * Params: 
+                 *  route_id - Route identifier 
+                 *  key - api key 
+                 */
                 case FIELDS.DIRECTIONS:
-                    break;
+                    if(args.length == 0)
+                        return Promise.reject("No route_id specified.");
+                    else if(args.length == 1)
+                        return await Request.get(FIELDS.DIRECTIONS, this.token, args[0]);
+                    else
+                        return Promise.reject("Invalid arguments provided.");
                 case FIELDS.SCHEDULES:
                     break;
                 case FIELDS.STOPS:
