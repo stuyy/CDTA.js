@@ -4,10 +4,14 @@ const fetch = require('node-fetch');
 
 module.exports = class RequestHandler extends EventEmitter {
 
-    checkStatus()
+    static async checkStatus()
     {
-        fetch(URL).then(res => res.text())
-        .then(json => console.log(json))
-        .catch(err => console.error);
+        const response = await fetch(URL);
+        if(response.status == 200)
+        {
+            const json = JSON.parse(await response.text());
+        }
+        else
+            throw new Error("Invalid Credentials");
     }
 }

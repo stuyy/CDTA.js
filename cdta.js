@@ -1,4 +1,5 @@
 const EventEmitter = require('events');
+const Request = require('./RequestHandler');
 
 module.exports = class CDTAClient extends EventEmitter {
     constructor(token = null)
@@ -14,6 +15,8 @@ module.exports = class CDTAClient extends EventEmitter {
     }
     authorize()
     {
-        console.log(this.token);
+        Request.checkStatus().then(() => {
+            this.emit("authorized");
+        }).catch(err => this.emit('error', err));
     }
 }
