@@ -27,6 +27,7 @@ class CDTAClient extends EventEmitter {
         if(flag)
         {
             var response = await Request.get(field, this.token, args);
+            console.log(response);
             return response;
         }
         else 

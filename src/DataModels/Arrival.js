@@ -1,4 +1,4 @@
-module.exports = class Arrival {
+class Arrival {
     /**
      * 
      * @param { The service type - WEEKDAY, SATURDAY, SUNDAY } type 
@@ -21,4 +21,7 @@ module.exports = class Arrival {
         //     value: function() { return this.trip_id; }
         // })
     }
-} 
+    
+};
+
+module.exports = Arrival;

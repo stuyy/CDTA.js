@@ -2,10 +2,7 @@ const { BASE_URL, FIELDS } = require('./Constants');
 const BusStop = require('../DataModels/BusStop');
 const Collection = require('./Collection');
 const Arrival = require('../DataModels/Arrival');
-const Cache = require('../CacheStorage/Cache');
-const RouteCache = require('../CacheStorage/RouteCache');
-const Request = require('../Requests/RequestHandler');
-console.log(Request);
+
 module.exports.getEndpointURL = function (BASE_URL, route, params)
 {
     if(typeof params !== 'object')
@@ -63,35 +60,20 @@ module.exports.validate = function(field, ...args)
 }
 module.exports.createObject = async function(type, response, token)
 {
-     // An array of key value pairs.
     if(type == FIELDS.ARRIVALS) // Ifroute is Arrival, create and return a BusStop object with arrivals collection set.
     {   
-        var routeId = null, routeName = null;
+        var routeIds = new Set();
         const arrivals = response.arrivals;
         let arrivalsArray = [];
         for(var arrival in arrivals)
         {
             arrivals[arrival].date = response.date;
             var newArrival = new Arrival();
-            routeId = arrivals[arrival].route_id;
-            routeName = arrivals[arrival].route_name;
-            delete arrivals[arrival].route_id;
-            delete arrivals[arrival].route_name;
+            routeIds.add(arrivals[arrival].route_id);
             let obj = Object.assign(newArrival, arrivals[arrival]);
             arrivalsArray.push([obj.trip_id, obj]);
+            
         }
-        let stop = new BusStop(response.stop_id, response.stop_name, response.schedule_type, new Collection(arrivalsArray));
-        // Create a RouteCache object.
-        var routeCache = new RouteCache();
-        if(routeCache.get(routeId))
-        {
-            console.log("Route exists in cache.");
-        }
-        else {
-            console.log("Route does not exist in cache.");
-            Request.getRoutes();
-        }
-        // FETCH ROUTES.
-        return stop;
+        return new BusStop(response.stop_id, response.stop_name, response.schedule_type, new Collection(arrivalsArray));
     }
 }
