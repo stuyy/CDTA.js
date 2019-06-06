@@ -2,6 +2,7 @@ const URL = "http://api.cdta.org/api/v1/?request=ping&key=" + process.env.TOKEN;
 const EventEmitter = require('events');
 const fetch = require('node-fetch');
 const { API, FIELDS } = require('./Constants');
+const utils = require('./utils/Util');
 
 module.exports = class RequestHandler extends EventEmitter {
 
@@ -17,11 +18,12 @@ module.exports = class RequestHandler extends EventEmitter {
     }
     static async get(field, token, ...args)
     {
-        var response = null, url = null;
+        var endpoint = utils.getEndpointURL(API, field, token, ...args);
+        var response = null;
         switch(field)
         {
             case FIELDS.TIME:
-                response = await fetch(API + 'time' + '&key=' + token);
+                response = await fetch(endpoint);
                 if(response.status == 200)
                     return JSON.parse(await response.text());
                 else if(response.status == 401)
@@ -29,33 +31,28 @@ module.exports = class RequestHandler extends EventEmitter {
             case FIELDS.ROUTES:
                 if(args.length == 0) // Return all routes.
                 {
-                    response = await fetch(API + 'routes' + '&key=' + token);
+                    response = await fetch(endpoint);
                     return JSON.parse(await response.text());
                 }
                 else if(args.length == 1)
                 {
-                    response = await fetch(API + 'routes/' + args[0] + '&key=' + token);
+                    response = await fetch(endpoint);
                     return JSON.parse(await response.text());
                 }
                 break;
             case FIELDS.DIRECTIONS:
-                url = API + FIELDS.DIRECTIONS + "/" + args[0] + "&key=" + token;
-                response = await fetch(url);
+                response = await fetch(endpoint);
                 return JSON.parse(await response.text());
-                break;
             case FIELDS.SCHEDULES:
-                url = API + FIELDS.SCHEDULES + "/" + args[0] + "/" + args[1] + "/" + args[2] + "&key=" + token;
-                return JSON.parse(await (await fetch(url)).text());
+                return JSON.parse(await (await fetch(endpoint)).text());
             case FIELDS.STOPS:
-                url = API + FIELDS.STOPS + "/" + args[0] + "/" + args[1] + "&key=" + token;
-                return JSON.parse(await (await fetch(url)).text());
+                return JSON.parse(await (await fetch(endpoint)).text());
             case FIELDS.NEAR_STOPS:
-                url = API + FIELDS.NEAR_STOPS + "/" + args[0] + "/" + args[1] + "/" + args[2] + "&key=" + token;
-                return JSON.parse(await (await fetch(url)).text());
+                return JSON.parse(await (await fetch(endpoint)).text());
             case FIELDS.SEARCH_STOPS:
-                url = API + FIELDS.SEARCH_STOPS + "/" + args[0] + "&key=" + token;
-                return JSON.parse(await (await fetch(url)).text());
+                return JSON.parse(await (await fetch(endpoint)).text());
             case FIELDS.SEARCH:
+                
                 break;
             case FIELDS.ARRIVALS:
                 break;
