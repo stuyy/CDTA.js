@@ -1,6 +1,11 @@
 const fetch = require('node-fetch');
 const { BASE_URL, FIELDS } = require('../utils/Constants');
 const utils = require('../utils/Util');
+const Cache = require('../CacheStorage/Cache');
+/**
+ * RequestHandler takes care of ALL API Requests.
+ * RequestHandler also has a Cache object, which will be responsible for taking care of all cached data
+ */
 
 module.exports = class RequestHandler {
 
@@ -21,7 +26,8 @@ module.exports = class RequestHandler {
         try {
             const raw = await fetch(endpoint);
             const response = JSON.parse((await (await fetch(endpoint)).text()));
-            return await raw.status == 200 ? response : Promise.reject(new Error(raw.status + " : " + raw.message));
+            const obj = utils.createObject(field, response);
+            return await raw.status == 200 ? obj : Promise.reject(new Error(raw.status + " : " + raw.message));
         }
         catch(ex)
         {

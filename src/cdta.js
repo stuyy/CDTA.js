@@ -28,7 +28,7 @@ module.exports = class CDTAClient extends EventEmitter {
         if(flag)
         {
             var response = await Request.get(field, this.token, args);
-            utils.createObject(field, response);
+            console.log(response)
             return response;
         }
         else 

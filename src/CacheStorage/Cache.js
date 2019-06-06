@@ -1,5 +1,10 @@
+
 class Cache extends Map {
-    constructor()
+    constructor(iterable)
+    {
+        super(iterable);
+    }
+    save()
     {
         
     }

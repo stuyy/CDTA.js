@@ -9,12 +9,10 @@ module.exports = class Arrival {
      * @param { Total minutes until arrival } minutes 
      * @param { The time of arrival (Current time + minutes)} time 
      */
-    constructor(type = null, date = null, routeId = null, routeName = null, direction = null, tripId = null, minutes = null, time = null)
+    constructor(type = null, date = null, direction = null, tripId = null, minutes = null, time = null)
     {
         this.type = type;
         this.date = date;
-        this.route_id = routeId;
-        this.route_name = routeName;
         this.direction = direction;
         this.trip_id = tripId;
         this.arrival_time = time;

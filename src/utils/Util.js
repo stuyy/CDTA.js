@@ -3,6 +3,7 @@ const BusStop = require('../DataModels/BusStop');
 const Collection = require('./Collection');
 const Arrival = require('../DataModels/Arrival');
 const Cache = require('../CacheStorage/Cache');
+
 module.exports.getEndpointURL = function (BASE_URL, route, params)
 {
     if(typeof params !== 'object')
@@ -64,16 +65,21 @@ module.exports.createObject = function(type, response)
      // An array of key value pairs.
     if(type == FIELDS.ARRIVALS) // Ifroute is Arrival, create and return a BusStop object with arrivals collection set.
     {   
+        var routeId = null, routeName = null;
         const arrivals = response.arrivals;
         let arrivalsArray = [];
         for(var arrival in arrivals)
         {
             arrivals[arrival].date = response.date;
             var newArrival = new Arrival();
+            delete arrivals[arrival].route_id;
+            delete arrivals[arrival].route_name;
             let obj = Object.assign(newArrival, arrivals[arrival]);
             arrivalsArray.push([obj.trip_id, obj]);
         }
         let stop = new BusStop(response.stop_id, response.stop_name, response.schedule_type, new Collection(arrivalsArray));
-        console.log(stop);
+
+        // FETCH ROUTES.
+        return stop;
     }
 }
