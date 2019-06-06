@@ -1,6 +1,7 @@
 const { FIELDS } = require('./Constants');
 const BusStop = require('../DataModels/BusStop');
-
+const Collection = require('./Collection');
+const Arrival = require('../DataModels/Arrival');
 module.exports.getEndpointURL = function (BASE_URL, route, params)
 {
     if(typeof params !== 'object')
@@ -57,7 +58,22 @@ module.exports.validate = function(field, ...args)
     }
 }
 
-module.exports.createAllRoutes = function(response)
+module.exports.createObject = function(type, response)
 {
-    
+     // An array of key value pairs.
+    if(type == FIELDS.ARRIVALS) // Ifroute is Arrival, create and return a BusStop object with arrivals collection set.
+    {   
+        const arrivals = response.arrivals;
+        let arrivalsArray = [];
+        for(var arrival in arrivals)
+        {
+            var newArrival = new Arrival();
+            let obj = Object.assign(newArrival, arrivals[arrival]);
+            arrivalsArray.push([obj.trip_id, obj]);
+        }
+        let stop = new BusStop(response.stop_id, response.stop_name, response.schedule_type, new Collection(arrivalsArray));
+        console.log(stop);
+        stop.arrivals = null;
+        console.log(stop);
+    }
 }

@@ -48,7 +48,7 @@ app.on('authorized', () => {
 
 (async () => {
     try {
-        const data = await app.get('arrivals', 114, 2);
+        const data = await app.get('arrivals', '00874', 1);
         console.log("Good");
     }
     catch(ex)
