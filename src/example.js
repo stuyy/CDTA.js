@@ -1,5 +1,6 @@
 const { CDTA } = require('./index');
 const app = new CDTA(process.env.TOKEN);
+const Collection = require('./utils/Collection');
 
 app.on('error', err =>{
     console.log(err);
@@ -14,7 +15,9 @@ let arrival = new Arrival(1, 'Washington', 'S', 123, 'Washington', 55, "23:00:45
 
 console.log(arrival);
 arrival._minutes = '5555';
-console.log(arrival);
+
+var collection = new Collection(null);
+collection.set('anson', 'foong');
 // app.get('time')
 // .then(res => console.log(res))
 // .catch(err => console.log(err));

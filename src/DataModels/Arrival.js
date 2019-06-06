@@ -8,7 +8,7 @@ module.exports = class Arrival {
         this.routeName = routeName;
         this.minutes = minutes;
         this.time = time;
-        
         Object.freeze(this);
     }
+
 }
