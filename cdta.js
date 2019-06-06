@@ -127,6 +127,9 @@ module.exports = class CDTAClient extends EventEmitter {
                  */
                 case FIELDS.ALERTS:
                     return await Request.get(FIELDS.ALERTS, this.token);
+                default:
+                    console.log("Nope.");
+                    break;
             }
         }
         catch(ex)

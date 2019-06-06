@@ -19,39 +19,10 @@ module.exports = class RequestHandler {
     {
         var endpoint = utils.getEndpointURL(BASE_URL, field, token, ...args);
         const response = await fetch(endpoint);
-        console.log(response);
-        return await response.status == 200 ? JSON.parse(await response.text()) : Promise.reject(new Error(response.status));
-        /*
-        var response = null;
-        switch(field)
-        {
-            case FIELDS.TIME:
-                response = await fetch(endpoint);
-                if(response.status == 200)
-                    return JSON.parse(await response.text());
-                else if(response.status == 401)
-                    return Promise.reject(new Error("Invalid API Key"));
-            case FIELDS.ROUTES:
-                if(args.length == 0) // Return all routes.
-                    return JSON.parse(await (await fetch(endpoint)).text())
-                else if(args.length == 1)
-                    return JSON.parse(await (await fetch(endpoint)).text())
-            case FIELDS.DIRECTIONS:
-                return JSON.parse(await (await fetch(endpoint)).text())
-            case FIELDS.SCHEDULES:
-                return JSON.parse(await (await fetch(endpoint)).text());
-            case FIELDS.STOPS:
-                return JSON.parse(await (await fetch(endpoint)).text());
-            case FIELDS.NEAR_STOPS:
-                return JSON.parse(await (await fetch(endpoint)).text());
-            case FIELDS.SEARCH_STOPS:
-                return JSON.parse(await (await fetch(endpoint)).text());
-            case FIELDS.SEARCH:
-                return (await fetch(endpoint)).status == 200 ? JSON.parse(await (await fetch(endpoint)).text()): Promise.reject(new Error("Invalid"))
-                break;
-            case FIELDS.ARRIVALS:
-                break;
-        } */
+        if(FIELDS.hasOwnProperty(field.toUpperCase()))
+            return await response.status == 200 ? JSON.parse(await response.text()) : Promise.reject(new Error(response.status));
+        else
+            return Promise.reject(new Error(response.status))
     }
     static async requestAPI(endpoint)
     {
