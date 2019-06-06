@@ -1,7 +1,7 @@
 const URL = "http://api.cdta.org/api/v1/?request=ping&key=" + process.env.TOKEN;
 const EventEmitter = require('events');
 const fetch = require('node-fetch');
-const { API, FIELDS } = require('./Constants');
+const { BASE_URL, FIELDS } = require('./Constants');
 const utils = require('./utils/Util');
 
 module.exports = class RequestHandler extends EventEmitter {
@@ -18,7 +18,7 @@ module.exports = class RequestHandler extends EventEmitter {
     }
     static async get(field, token, ...args)
     {
-        var endpoint = utils.getEndpointURL(API, field, token, ...args);
+        var endpoint = utils.getEndpointURL(BASE_URL, field, token, ...args);
         var response = null;
         switch(field)
         {

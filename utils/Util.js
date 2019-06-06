@@ -1,7 +1,7 @@
 
-module.exports.getEndpointURL = function (API, field, token, ...args)
+module.exports.getEndpointURL = function (BASE_URL, field, token, ...args)
 {
-    return API + field + "/" + build([...args, token]);
+    return BASE_URL + field + "/" + build([...args, token]);
 }
 
 function build(arguments)

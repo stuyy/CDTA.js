@@ -21,10 +21,10 @@ app.get('time')
 // .then(res => console.log(res))
 // .catch(err => console.log(err));
 
-// app.get('stops', 12, 0)
-// .then(res => console.log(res))
-// .catch(err => console.log(err));
-
-app.get('searchstops', 'SUNY Collins')
+app.get('stops', 12, 0)
 .then(res => console.log(res))
 .catch(err => console.log(err));
+
+// app.get('searchstops', 'SUNY Collins')
+// .then(res => console.log(res))
+// .catch(err => console.log(err));
