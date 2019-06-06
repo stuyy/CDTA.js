@@ -1,5 +1,6 @@
 const fetch = require('node-fetch');
 const { BASE_URL, FIELDS } = require('../utils/Constants');
+const utils = require('../utils/Util');
 const Cache = require('../CacheStorage/Cache');
 /**
  * RequestHandler takes care of ALL API Requests.
@@ -40,5 +41,4 @@ module.exports = class RequestHandler {
         console.log(this.token);
     }
     
-}
-const utils = require('../utils/Util');
+} 

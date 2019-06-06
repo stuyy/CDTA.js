@@ -4,13 +4,8 @@ const Collection = require('./Collection');
 const Arrival = require('../DataModels/Arrival');
 const Cache = require('../CacheStorage/Cache');
 const RouteCache = require('../CacheStorage/RouteCache');
-const Request = require('../Requests/RequestHandler.js');
-const HelloWorld = require('../Requests/RequestHandler');
-
-console.log(HelloWorld);
-console.log(RouteCache);
+const Request = require('../Requests/RequestHandler');
 console.log(Request);
-console.log(Arrival);
 module.exports.getEndpointURL = function (BASE_URL, route, params)
 {
     if(typeof params !== 'object')
@@ -94,6 +89,7 @@ module.exports.createObject = async function(type, response, token)
         }
         else {
             console.log("Route does not exist in cache.");
+            Request.getRoutes();
         }
         // FETCH ROUTES.
         return stop;
