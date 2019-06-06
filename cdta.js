@@ -1,6 +1,7 @@
 const EventEmitter = require('events');
 const Request = require('./RequestHandler');
 const { API, FIELDS } = require('./Constants');
+const utils = require('./utils/Util');
 
 module.exports = class CDTAClient extends EventEmitter {
     constructor(token = null)
@@ -22,6 +23,11 @@ module.exports = class CDTAClient extends EventEmitter {
     }
     async get(field, ...args)
     {
+        var flag = utils.validate(field, ...args);
+        console.log(flag, field);
+        if(flag) return Promise.resolve('yes');
+        else return Promise.reject('no');
+        process.exit(0);
         try
         {
             var response = null;

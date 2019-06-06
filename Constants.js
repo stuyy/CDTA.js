@@ -5,8 +5,8 @@ const FIELDS = {
     DIRECTIONS: 'directions',
     SCHEDULES: 'schedules',
     STOPS: 'stops',
-    NEAR_STOPS: 'nearstops',
-    SEARCH_STOPS: 'searchstops',
+    NEARSTOPS: 'nearstops',
+    SEARCHSTOPS: 'searchstops',
     SEARCH: 'search',
     ARRIVALS: 'arrivals',
     ALERTS: 'alerts'

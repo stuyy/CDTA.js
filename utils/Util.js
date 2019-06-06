@@ -1,7 +1,8 @@
+const { FIELDS } = require('../Constants');
 
-module.exports.getEndpointURL = function (BASE_URL, field, token, ...args)
+module.exports.getEndpointURL = function (BASE_URL, route, token, ...args)
 {
-    return BASE_URL + field + "/" + build([...args, token]);
+    return BASE_URL + route + "/" + build([...args, token]);
 }
 
 function build(arguments)
@@ -17,5 +18,37 @@ function build(arguments)
             return el + build(arguments);
         else
             return el + "/" + build(arguments);
+    }
+}
+
+module.exports.validate = function(field, ...args)
+{
+    if(FIELDS.hasOwnProperty(field.toUpperCase()))
+    {
+        switch(field)
+            {
+                case FIELDS.TIME:
+                    return true;
+                case FIELDS.ROUTES: 
+                    return args.length == 0 || args.length == 1 ? true : false;
+                case FIELDS.DIRECTIONS:
+                    return args.length == 1 ? true : false;
+                case FIELDS.SCHEDULES:
+                    return args.length == 3 ? true : false;
+                case FIELDS.STOPS:
+                    return args.length == 2 ? true : false
+                case FIELDS.NEARSTOPS:
+                    return args.length == 2 || args.length == 3 ? true : false;
+                case FIELDS.SEARCHSTOPS:
+                    return args.length == 1 ? true : false;
+                case FIELDS.SEARCH:
+                    return args.length == 1 || args.length == 2 ? true : false;
+                case FIELDS.ARRIVALS:
+                    return args.length == 1 || args.length == 2 ? true : false;
+                case FIELDS.ALERTS:
+                    return true;
+                default:
+                    return false;
+            }
     }
 }

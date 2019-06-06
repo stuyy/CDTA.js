@@ -23,6 +23,7 @@ module.exports = class RequestHandler {
             return await response.status == 200 ? JSON.parse(await response.text()) : Promise.reject(new Error(response.status));
         else
             return Promise.reject(new Error(response.status))
+        // master branch 7e58e1c
     }
     static async requestAPI(endpoint)
     {
