@@ -2,6 +2,7 @@ const { FIELDS } = require('./Constants');
 const BusStop = require('../DataModels/BusStop');
 const Collection = require('./Collection');
 const Arrival = require('../DataModels/Arrival');
+const Cache = require('../CacheStorage/Cache');
 module.exports.getEndpointURL = function (BASE_URL, route, params)
 {
     if(typeof params !== 'object')
@@ -67,13 +68,12 @@ module.exports.createObject = function(type, response)
         let arrivalsArray = [];
         for(var arrival in arrivals)
         {
+            arrivals[arrival].date = response.date;
             var newArrival = new Arrival();
             let obj = Object.assign(newArrival, arrivals[arrival]);
             arrivalsArray.push([obj.trip_id, obj]);
         }
         let stop = new BusStop(response.stop_id, response.stop_name, response.schedule_type, new Collection(arrivalsArray));
-        console.log(stop);
-        stop.arrivals = null;
         console.log(stop);
     }
 }
