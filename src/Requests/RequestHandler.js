@@ -18,16 +18,13 @@ module.exports = class RequestHandler {
     static async get(field, token, ...args)
     {
         var endpoint = utils.getEndpointURL(BASE_URL, field, token, ...args);
-        const response = await fetch(endpoint);
+        const response = JSON.parse((await (await fetch(endpoint)).text()));
         if(FIELDS.hasOwnProperty(field.toUpperCase()))
-            return await response.status == 200 ? JSON.parse(await response.text()) : Promise.reject(new Error(response.status));
+            return await response.status == 200 ? response : Promise.reject(new Error(response.status + " : " + response.message));
         else
-            return Promise.reject(new Error(response.status))
+        {
+            return Promise.reject(new Error("Invalid parameter/fields"))
+        }
         // master branch 7e58e1c
-    }
-    static async requestAPI(endpoint)
-    {
-        const response = await fetch(endpoint);
-        console.log(response.status);
     }
 }
