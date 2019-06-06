@@ -12,7 +12,7 @@ module.exports = class Route {
         this.routeColor = routeColor;
         this.routeTextColor = routeTextColor;
         this.serviceDays = serviceDays;
-        this.arrivals = new Collection();
+        this.arrivals = new Collection(arrivals);
         Object.freeze(this);
     }
 }

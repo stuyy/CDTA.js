@@ -17,14 +17,12 @@ module.exports = class RequestHandler {
     }
     static async get(field, token, ...args)
     {
-        var endpoint = utils.getEndpointURL(BASE_URL, field, token, ...args);
+        var [params] = [...args]
+        params = params.concat(token);
+        var endpoint = utils.getEndpointURL(BASE_URL, field, params);
+        const raw = await fetch(endpoint);
         const response = JSON.parse((await (await fetch(endpoint)).text()));
-        if(FIELDS.hasOwnProperty(field.toUpperCase()))
-            return await response.status == 200 ? response : Promise.reject(new Error(response.status + " : " + response.message));
-        else
-        {
-            return Promise.reject(new Error("Invalid parameter/fields"))
-        }
+        return await raw.status == 200 ? response : Promise.reject(new Error(raw.status + " : " + raw.message));
         // master branch 7e58e1c
     }
 }

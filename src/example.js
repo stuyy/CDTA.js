@@ -1,5 +1,5 @@
 const { CDTA } = require('./index');
-const app = new CDTA(process.env.TOKEN);
+const app = new CDTA(require('./config/config.json').token);
 const Collection = require('./utils/Collection');
 
 app.on('error', err =>{
@@ -10,14 +10,6 @@ app.on('authorized', () => {
     console.log("Authorized!");
 });
 
-const Arrival = require('./DataModels/Arrival');
-let arrival = new Arrival(1, 'Washington', 'S', 123, 'Washington', 55, "23:00:45");
-
-console.log(arrival);
-arrival._minutes = '5555';
-
-var collection = new Collection(null);
-collection.set('anson', 'foong');
 // app.get('time')
 // .then(res => console.log(res))
 // .catch(err => console.log(err));
@@ -50,7 +42,7 @@ collection.set('anson', 'foong');
 // .then(res => console.log(res))
 // .catch(err => console.log(err));
 
-// app.get('arrivals', 12)
-// .then(res => console.log(res))
-// .catch(err => console.log(err));
+app.get('arrivals', 114, 2)
+.then(res => console.log(res))
+.catch(err => console.log(err));
 

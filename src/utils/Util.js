@@ -1,8 +1,11 @@
 const { FIELDS } = require('./Constants');
 
-module.exports.getEndpointURL = function (BASE_URL, route, token, ...args)
+module.exports.getEndpointURL = function (BASE_URL, route, params)
 {
-    return BASE_URL + route + "/" + build([...args, token]);
+    if(typeof params !== 'object')
+        return BASE_URL + "&key=" + params;
+    else
+        return BASE_URL + route + "/" + build(params);
 }
 
 function build(arguments)
@@ -51,4 +54,9 @@ module.exports.validate = function(field, ...args)
                     return false;
             }
     }
+}
+
+module.exports.createAllRoutes = function(response)
+{
+    //console.log(response);
 }
