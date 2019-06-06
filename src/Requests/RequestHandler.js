@@ -8,10 +8,9 @@ module.exports = class RequestHandler {
     static async checkStatus(token)
     {
         const response = await fetch(utils.getEndpointURL(BASE_URL, 'ping', token));
-        if(response.status == 200)
-        {
-            const json = JSON.parse(await response.text());
-        }
+        // Check status and ensure headers are correct.
+        if(response.status == 200) // The "ping" field always returns text/html... don't parse.
+            return response.status;
         else if(response.status == 401)
             throw new Error("Invalid Credentials");
     }
