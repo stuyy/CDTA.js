@@ -42,7 +42,17 @@ app.on('authorized', () => {
 // .then(res => console.log(res))
 // .catch(err => console.log(err));
 
-app.get('arrivals', 114, 2)
-.then(res => console.log(res))
-.catch(err => console.log(err));
+// app.get('arrivals', 114, 2)
+// .then(res => console.log(res))
+// .catch(err => console.log(err));
 
+(async () => {
+    try {
+        const data = await app.get('arrivals', 114, 2);
+        console.log("Good");
+    }
+    catch(ex)
+    {
+        console.log(ex);
+    }
+})();

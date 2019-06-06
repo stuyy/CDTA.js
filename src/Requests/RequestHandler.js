@@ -1,4 +1,3 @@
-const URL = "http://api.cdta.org/api/v1/?request=ping&key=" + process.env.TOKEN;
 const fetch = require('node-fetch');
 const { BASE_URL, FIELDS } = require('../utils/Constants');
 const utils = require('../utils/Util');
@@ -19,9 +18,15 @@ module.exports = class RequestHandler {
         var [params] = [...args]
         params = params.concat(token);
         var endpoint = utils.getEndpointURL(BASE_URL, field, params);
-        const raw = await fetch(endpoint);
-        const response = JSON.parse((await (await fetch(endpoint)).text()));
-        return await raw.status == 200 ? response : Promise.reject(new Error(raw.status + " : " + raw.message));
+        try {
+            const raw = await fetch(endpoint);
+            const response = JSON.parse((await (await fetch(endpoint)).text()));
+            return await raw.status == 200 ? response : Promise.reject(new Error(raw.status + " : " + raw.message));
+        }
+        catch(ex)
+        {
+            console.log(ex);
+        }
         // master branch 7e58e1c
     }
 }

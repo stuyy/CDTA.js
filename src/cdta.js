@@ -25,7 +25,11 @@ module.exports = class CDTAClient extends EventEmitter {
     {   
         var flag = utils.validate(field, ...args);
         if(flag)
-            return await Request.get(field, this.token, args);
+        {
+            var response = await Request.get(field, this.token, args);
+            utils.createAllRoutes(response);
+            return response;
+        }
         else 
             return Promise.reject('no');
     }
