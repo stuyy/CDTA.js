@@ -1,4 +1,4 @@
-const { FIELDS } = require('../Constants');
+const { FIELDS } = require('./Constants');
 
 module.exports.getEndpointURL = function (BASE_URL, route, token, ...args)
 {

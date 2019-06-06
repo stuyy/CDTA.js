@@ -1,6 +1,6 @@
 const EventEmitter = require('events');
-const Request = require('./RequestHandler');
-const { API, FIELDS } = require('./Constants');
+const Request = require('./Requests/RequestHandler');
+const { BASE_URL, FIELDS } = require('./utils/Constants');
 const utils = require('./utils/Util');
 
 module.exports = class CDTAClient extends EventEmitter {
@@ -22,10 +22,10 @@ module.exports = class CDTAClient extends EventEmitter {
         }).catch(err => this.emit('error', err));
     }
     async get(field, ...args)
-    {
+    {   
         var flag = utils.validate(field, ...args);
         if(flag)
-            return await Request.get(field, this.token);
+            return await Request.get(field, this.token, args);
         else 
             return Promise.reject('no');
     }

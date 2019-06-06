@@ -9,6 +9,12 @@ app.on('authorized', () => {
     console.log("Authorized!");
 });
 
+const Arrival = require('./DataModels/Arrival');
+let arrival = new Arrival(1, 'Washington', 'S', 123, 'Washington', 55, "23:00:45");
+
+console.log(arrival);
+arrival._minutes = '5555';
+console.log(arrival);
 // app.get('time')
 // .then(res => console.log(res))
 // .catch(err => console.log(err));
@@ -29,7 +35,7 @@ app.on('authorized', () => {
 // .then(res => console.log(res))
 // .catch(err => console.log(err));
 
-// app.get('searchstops', 'SUNY Collins')
+// app.get('searchstops', 'SUNY Collins Circle')
 // .then(res => console.log(res))
 // .catch(err => console.log(err));
 
@@ -44,3 +50,4 @@ app.on('authorized', () => {
 // app.get('arrivals', 12)
 // .then(res => console.log(res))
 // .catch(err => console.log(err));
+

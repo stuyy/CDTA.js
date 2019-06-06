@@ -1,7 +1,7 @@
 const URL = "http://api.cdta.org/api/v1/?request=ping&key=" + process.env.TOKEN;
 const fetch = require('node-fetch');
-const { BASE_URL, FIELDS } = require('./Constants');
-const utils = require('./utils/Util');
+const { BASE_URL, FIELDS } = require('../utils/Constants');
+const utils = require('../utils/Util');
 
 module.exports = class RequestHandler {
 
