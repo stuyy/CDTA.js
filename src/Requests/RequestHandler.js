@@ -9,20 +9,17 @@ const Cache = require('../CacheStorage/Cache');
 
 module.exports = class RequestHandler {
 
-    constructor(token)
+    static async checkStatus(token)
     {
         this.token = token;
-    }
-    async checkStatus()
-    {
-        const response = await fetch(utils.getEndpointURL(BASE_URL, 'ping', this.token));
+        const response = await fetch(utils.getEndpointURL(BASE_URL, 'ping', token));
         // Check status and ensure headers are correct.
         if(response.status == 200) // The "ping" field always returns text/html... don't parse.
             return response.status;
         else if(response.status == 401)
             throw new Error("Invalid Credentials");
     }
-    async get(field, token, ...args)
+    static async get(field, token, ...args)
     {
         var [params] = [...args]
         params = params.concat(token);
@@ -39,8 +36,9 @@ module.exports = class RequestHandler {
         }
         // master branch 7e58e1c
     }
-    static async getRoutes()
+    static getRoutes()
     {
-
+        console.log(this.token);
     }
-}
+    
+} 

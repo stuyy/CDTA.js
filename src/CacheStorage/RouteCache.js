@@ -4,7 +4,6 @@ class RouteCache extends Cache {
     constructor(iterable)
     {
         super(iterable);
-        
     }
 }
 

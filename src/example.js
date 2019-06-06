@@ -1,7 +1,6 @@
 const { CDTA } = require('./index');
 const app = new CDTA(require('./config/config.json').token);
 const Collection = require('./utils/Collection');
-
 app.on('error', err =>{
     console.log(err);
 });

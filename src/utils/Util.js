@@ -4,8 +4,13 @@ const Collection = require('./Collection');
 const Arrival = require('../DataModels/Arrival');
 const Cache = require('../CacheStorage/Cache');
 const RouteCache = require('../CacheStorage/RouteCache');
-const Requests = require('../Requests/RequestHandler');
+const Request = require('../Requests/RequestHandler.js');
+const HelloWorld = require('../Requests/RequestHandler');
 
+console.log(HelloWorld);
+console.log(RouteCache);
+console.log(Request);
+console.log(Arrival);
 module.exports.getEndpointURL = function (BASE_URL, route, params)
 {
     if(typeof params !== 'object')
@@ -61,8 +66,7 @@ module.exports.validate = function(field, ...args)
             }
     }
 }
-
-module.exports.createObject = function(type, response, token)
+module.exports.createObject = async function(type, response, token)
 {
      // An array of key value pairs.
     if(type == FIELDS.ARRIVALS) // Ifroute is Arrival, create and return a BusStop object with arrivals collection set.
