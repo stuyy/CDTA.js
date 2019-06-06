@@ -1,8 +1,10 @@
-const { FIELDS } = require('./Constants');
+const { BASE_URL, FIELDS } = require('./Constants');
 const BusStop = require('../DataModels/BusStop');
 const Collection = require('./Collection');
 const Arrival = require('../DataModels/Arrival');
 const Cache = require('../CacheStorage/Cache');
+const RouteCache = require('../CacheStorage/RouteCache');
+const Requests = require('../Requests/RequestHandler');
 
 module.exports.getEndpointURL = function (BASE_URL, route, params)
 {
@@ -60,7 +62,7 @@ module.exports.validate = function(field, ...args)
     }
 }
 
-module.exports.createObject = function(type, response)
+module.exports.createObject = function(type, response, token)
 {
      // An array of key value pairs.
     if(type == FIELDS.ARRIVALS) // Ifroute is Arrival, create and return a BusStop object with arrivals collection set.
@@ -72,13 +74,23 @@ module.exports.createObject = function(type, response)
         {
             arrivals[arrival].date = response.date;
             var newArrival = new Arrival();
+            routeId = arrivals[arrival].route_id;
+            routeName = arrivals[arrival].route_name;
             delete arrivals[arrival].route_id;
             delete arrivals[arrival].route_name;
             let obj = Object.assign(newArrival, arrivals[arrival]);
             arrivalsArray.push([obj.trip_id, obj]);
         }
         let stop = new BusStop(response.stop_id, response.stop_name, response.schedule_type, new Collection(arrivalsArray));
-
+        // Create a RouteCache object.
+        var routeCache = new RouteCache();
+        if(routeCache.get(routeId))
+        {
+            console.log("Route exists in cache.");
+        }
+        else {
+            console.log("Route does not exist in cache.");
+        }
         // FETCH ROUTES.
         return stop;
     }

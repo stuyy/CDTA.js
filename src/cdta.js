@@ -10,6 +10,7 @@ module.exports = class CDTAClient extends EventEmitter {
         if(token)
         {
             this.token = token;
+            this.request = new Request(this.token);
             this.authorize();
         }
         else
@@ -17,7 +18,7 @@ module.exports = class CDTAClient extends EventEmitter {
     }
     authorize()
     {
-        Request.checkStatus(this.token).then(() => {
+        this.request.checkStatus(this.token).then(() => {
             this.emit("authorized");
         }).catch(err => this.emit('error', err));
     }
@@ -27,8 +28,8 @@ module.exports = class CDTAClient extends EventEmitter {
         var flag = utils.validate(field, ...args);
         if(flag)
         {
-            var response = await Request.get(field, this.token, args);
-            console.log(response)
+            var response = await this.request.get(field, this.token, args);
+            console.log(response);
             return response;
         }
         else 
