@@ -11,14 +11,14 @@ An Object Oriented, Promise-Based library that wraps around the CDTA Web API.
 
 # Basic Usage
 ```JS
-const { CDTA } = require('cdta.js');
+const { CDTA } = require('cdta');
 const client = new CDTA('your api key');
 
 client.on('error', err => {
     console.log(err);
 });
 
-client.on('authorized', {
+client.on('authorized', () => {
     console.log("Authorized!");
 });
 ```
