@@ -2,6 +2,7 @@ const { BASE_URL, FIELDS } = require('./Constants');
 const BusStop = require('../DataModels/BusStop');
 const Collection = require('./Collection');
 const Arrival = require('../DataModels/Arrival');
+const Route = require('../DataModels/Route');
 
 module.exports.getEndpointURL = function (BASE_URL, route, params)
 {
@@ -58,7 +59,7 @@ module.exports.validate = function(field, ...args)
             }
     }
 }
-module.exports.createObject = async function(type, response)
+module.exports.createObject = function(type, response)
 {
     console.log(type);
     if(type === FIELDS.ARRIVALS) // Ifroute is Arrival, create and return a BusStop object with arrivals collection set.
@@ -79,11 +80,17 @@ module.exports.createObject = async function(type, response)
     }
     else if(type === FIELDS.ROUTES)
     {
-        console.log("YO");
+        var routeMap = new Map();
         for(var route in response.routes)
         {
-            console.log("?");
-            console.log(response.routes[route].route_id);
+            var newRoute = new Route();
+            delete response.routes[route].uri;
+            delete response.routes[route].route_effective_date;
+            delete response.routes[route].route_direction_uri;
+            delete response.routes[route].route_schedule_uri;
+            let obj = Object.assign(newRoute, response.routes[route]);
+            routeMap.set(response.routes[route].route_id, newRoute);
         }
+        return routeMap;
     }
 }

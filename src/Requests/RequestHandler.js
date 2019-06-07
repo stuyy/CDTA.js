@@ -34,10 +34,11 @@ module.exports = class RequestHandler {
                     this.cacheManager = new CacheManager();
                     const raw = await fetch(endpoint);
                     const response = raw.status === 200 ? JSON.parse(await raw.text()) : null;
-                    var object = utils.createObject(field, response);
+                    var routeMap = utils.createObject(field, response);
+                    console.log(object);
                 }
                 else {
-                    
+                    console.log("Cache exists.");
                 }
             }
         }

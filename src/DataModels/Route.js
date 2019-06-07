@@ -22,17 +22,16 @@ module.exports = class Route {
      */
     constructor(routeId, routeName, routeType, description, routeUrl, scheduleUrl, mapKmlUrl, mapImageUrl, routeColor, routeTextColor, serviceDays, arrivals = null)
     {
-        this.routeId = routeId;
-        this.routeName = routeName;
-        this.routeType = routeType;
-        this.description = description;
-        this.routeUrl = routeUrl;
-        this.scheduleUrl = scheduleUrl;
-        this.mapKmlUrl = mapKmlUrl;
-        this.mapImageUrl = mapImageUrl;
-        this.routeColor = routeColor;
-        this.routeTextColor = routeTextColor;
-        this.serviceDays = serviceDays;
-        Object.freeze(this);
+        this.route_id = routeId;
+        this.route_name = routeName;
+        this.route_type = routeType;
+        this.route_description = description;
+        this.route_url = routeUrl;
+        this.schedule_url = scheduleUrl;
+        this.map_kml_url = mapKmlUrl;
+        this.map_image_url = mapImageUrl;
+        this.route_color = routeColor;
+        this.route_text_color = routeTextColor;
+        this.service_days = serviceDays;
     }
 }
