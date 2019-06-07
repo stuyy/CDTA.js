@@ -4,7 +4,10 @@ class RouteCache extends Map {
     {
         super(iterable);
         Object.defineProperty(this, 'isAllCached', {
-            set(flag) { this._isAllCached = flag; },
+            set(flag) { 
+                console.log("I'm the Route Cache");
+                this._isAllCached = flag;
+            },
             get() { return this._isAllCached; }
         })
     }
