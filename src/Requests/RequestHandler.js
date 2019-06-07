@@ -69,11 +69,16 @@ module.exports = class RequestHandler {
                     else // Everything here might not be cached, and the user had already requested one route before but needs another one.
                     {
                         // At this point, the routeCacheManager has already been initialized, we just need to fetch the current data and cache it.
-                        const raw = await fetch(endpoint);
-                        const response = raw.status === 200 ? JSON.parse(await raw.text()) : null;
-                        let route = await utils.createObject(field, response); // Create an object of Route type.
-                        this.cacheManager.routeCacheManager.set(route.route_id, route);
-                        return this.cacheManager.routeCacheManager.get(params[0].toString());
+                        if(this.cacheManager.routeCacheManager.get(params[0].toString()))
+                            return this.cacheManager.routeCacheManager.get(params[0].toString());
+                        else { 
+                            console.log("Fetching and Creating...");
+                            const raw = await fetch(endpoint);
+                            const response = raw.status === 200 ? JSON.parse(await raw.text()) : null;
+                            let route = await utils.createObject(field, response); // Create an object of Route type.
+                            this.cacheManager.routeCacheManager.set(route.route_id, route);
+                            return this.cacheManager.routeCacheManager.get(params[0].toString());
+                        }
                     }
                 }
             }
