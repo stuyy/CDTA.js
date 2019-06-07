@@ -79,17 +79,31 @@ module.exports.createObject = async function(type, response)
     }
     else if(type === FIELDS.ROUTES)
     {
-        var routeMap = new Map();
-        for(var route in response.routes)
+        if(response.routes.length != 1) // Return a map if the array length is bigger than 1
         {
-            var newRoute = new Route();
-            delete response.routes[route].uri;
-            delete response.routes[route].route_effective_date;
-            delete response.routes[route].route_direction_uri;
-            delete response.routes[route].route_schedule_uri;
-            let obj = Object.assign(newRoute, response.routes[route]);
-            routeMap.set(response.routes[route].route_id, newRoute);
+            var routeMap = new Map();
+            for(var route in response.routes)
+            {
+                var newRoute = new Route();
+                delete response.routes[route].uri;
+                delete response.routes[route].route_effective_date;
+                delete response.routes[route].route_direction_uri;
+                delete response.routes[route].route_schedule_uri;
+                let obj = Object.assign(newRoute, response.routes[route]);
+                routeMap.set(response.routes[route].route_id, newRoute);
+            }
+            return routeMap;
         }
-        return routeMap;
+        else {
+            // Return just a single object if array contains 1 route.
+            var newRoute = new Route();
+            let routeData = response.routes[0];
+            delete routeData.uri;
+            delete routeData.route_effective_date;
+            delete routeData.route_direction_uri;
+            delete routeData.route_schedule_uri;
+            return Object.assign(newRoute, routeData);
+            
+        }
     }
 }

@@ -49,7 +49,7 @@ module.exports = class RequestHandler {
                 else {
                     console.log("Cache Exists. Trying to retrieve route: " + params[0]);
                     // Check if user provided a parameter or wanted all routes.
-                    if(params.length === 0) // If no params, we need to 
+                    if(params.length === 0) // If no params, we need to cache all routes, and freeze the object.
                     {
                         if(!this.cacheManager.routeCacheManager.isAllCached)
                         {
@@ -59,15 +59,21 @@ module.exports = class RequestHandler {
                             var routeMap = await utils.createObject(field, response);
                             this.cacheManager.routeCacheManager = routeMap;
                             this.cacheManager.routeCacheManager.isAllCached = true;
-                            Object.freeze(this.cacheManager.routeCacheManager);
+                            Object.freeze(this.cacheManager.routeCacheManager); // Prevent routeCacheManager object from being modified.
                             console.log("Object Frozen");
-                            //this.cacheManager.routeCacheManager = null;
                             // Now all routes are cached.
                         }
                         return [...this.cacheManager.routeCacheManager]; // Destruct the map into an array of [key, value] pairs.
                     }
-                    else
+                    else // Everything here might not be cached, and the user had already requested one route before but needs another one.
+                    {
+                        // At this point, the routeCacheManager has already been initialized, we just need to fetch the current data and cache it.
+                        const raw = await fetch(endpoint);
+                        const response = raw.status === 200 ? JSON.parse(await raw.text()) : null;
+                        let route = await utils.createObject(field, response); // Create an object of Route type.
+                        console.log(this.cacheManager.routeCacheManager);
                         return this.cacheManager.routeCacheManager.get(params[0].toString());
+                    }
                 }
             }
         }

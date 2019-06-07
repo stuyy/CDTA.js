@@ -10,7 +10,11 @@ module.exports = class CacheManager {
     constructor()
     {
         Object.defineProperty(this, 'routeCacheManager', {
-            set (routes) { this._routeCacheManager = new RouteCache(routes); },
+            set (routes) { 
+                console.log("Setting the routes.");
+                console.log(routes);
+                this._routeCacheManager = new RouteCache(routes);
+             },
             get () { return this._routeCacheManager; }
         });
     }
