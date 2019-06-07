@@ -34,6 +34,7 @@ module.exports = class RequestHandler {
                     const raw = await fetch(endpoint);
                     const response = raw.status === 200 ? JSON.parse(await raw.text()) : null;
                     var routeMap = await utils.createObject(field, response);
+                
                     this.cacheManager.routeCacheManager = routeMap;
                     if(params.length === 0) {
                         this.cacheManager.routeCacheManager.isAllCached = true;
@@ -71,7 +72,7 @@ module.exports = class RequestHandler {
                         const raw = await fetch(endpoint);
                         const response = raw.status === 200 ? JSON.parse(await raw.text()) : null;
                         let route = await utils.createObject(field, response); // Create an object of Route type.
-                        console.log(this.cacheManager.routeCacheManager);
+                        this.cacheManager.routeCacheManager.set(route.route_id, route);
                         return this.cacheManager.routeCacheManager.get(params[0].toString());
                     }
                 }
