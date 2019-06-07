@@ -34,15 +34,17 @@ module.exports = class RequestHandler {
                     const raw = await fetch(endpoint);
                     const response = raw.status === 200 ? JSON.parse(await raw.text()) : null;
                     var routeMap = await utils.createObject(field, response);
-                    this.cacheManager.routeCacheManager = routeMap;
-                    return this.cacheManager.routeCacheManager;
+                    if(params.length === 0) {
+                        this.cacheManager.routeCacheManager = routeMap;
+                    }
+                    return routeMap;
                 }
                 else {
                     console.log("Cache Exists.");
                     // Check if user provided a parameter or wanted all routes.
-                    if(params.length === 0)
+                    if(params.length === 0) // If no params, we need to 
                     {
-                        console.log("No params");
+                        
                     }
                     else {
                         return this.cacheManager.routeCacheManager.get(params[0].toString());

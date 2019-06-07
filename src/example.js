@@ -1,13 +1,25 @@
 const { CDTA } = require('./index');
 const app = new CDTA(require('./config/config.json').token);
 const Collection = require('./utils/Collection');
-app.on('error', err =>{
-    console.log(err);
+
+const express_app = require('express')();
+const bodyParser = require('body-parser');
+
+express_app.use(bodyParser.json());
+express_app.get('/', async (req, res) => {
+    try {
+        var data = await app.get('routes');
+        console.log(data);
+        res.json(Array.from(data));
+    }
+    catch(ex)
+    {
+        console.log(ex);
+    }
 });
 
-app.on('authorized', () => {
-    console.log("Authorized!");
-});
+express_app.listen(3000, console.log("http://localhost:3000/"));
+
 
 // app.get('time')
 // .then(res => console.log(res))
@@ -44,16 +56,3 @@ app.on('authorized', () => {
 // app.get('arrivals', 114, 2)
 // .then(res => console.log(res))
 // .catch(err => console.log(err));
-
-(async () => {
-    try {
-        var data = await app.get('routes', 12);
-        console.log("After Cache: " + data);
-        data = await app.get('routes', 12);
-        console.log("From Cache: " + data);
-    }
-    catch(ex)
-    {
-        console.log(ex);
-    }
-})();
