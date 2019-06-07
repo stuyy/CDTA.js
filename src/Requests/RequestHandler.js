@@ -25,13 +25,18 @@ module.exports = class RequestHandler {
         params = params.concat(token);
         var endpoint = utils.getEndpointURL(BASE_URL, field, params);
         console.log(endpoint);
+        [params] = [...args] // Reset params array to the args array
         try {
             if(field === FIELDS.ROUTES)
             {
+                console.log(params);
                 if(args.length === 0) // Trying to fetch all routes.
                 {
+                    
                     const raw = await fetch(endpoint);
-                    //const response = raw.status === 200 ? JSON.parse()
+                    const response = raw.status === 200 ? JSON.parse(await raw.text()) : 'null';
+                    console.log("YO");
+                    console.log(response);
                     if(this.cacheManager === undefined || this.cacheManager === null)
                     {
                         this.cacheManager = new CacheManager();
@@ -46,6 +51,7 @@ module.exports = class RequestHandler {
         {
 
         }
+        /*
         try {
             const raw = await fetch(endpoint);
             const response = JSON.parse(await raw.text());
@@ -57,7 +63,7 @@ module.exports = class RequestHandler {
         catch(ex)
         {
             console.log(ex);
-        }
+        } */
         // master branch 7e58e1c
     }
 }
