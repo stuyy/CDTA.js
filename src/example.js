@@ -13,15 +13,15 @@ app.on('authorized', () => {
 // .then(res => console.log(res))
 // .catch(err => console.log(err));
 
-// app.get('routes', 712)
-// .then(res => console.log(res))
-// .catch(err => console.log(err));
+app.get('routes')
+.then(res => console.log(res))
+.catch(err => console.log(err));
 
 // app.get('directions', 12)
 // .then(res => console.log(res))
 // .catch(err => console.log(err));
 
-// app.get('schedules', 12, 'weekday', 0)
+// app.get('schedules', 712, 'weekday', 0)
 // .then(res => console.log(res))
 // .catch(err => console.log(err));
 
@@ -37,7 +37,7 @@ app.on('authorized', () => {
 // .then(response => console.log(response))
 // .catch(err => console.log(err));
 
-// app.get('nearstops', 74.65, -73.75)
+// app.get('nearstops', 42.6635, -73.78373)
 // .then(res => console.log(res))
 // .catch(err => console.log(err));
 
@@ -45,15 +45,3 @@ app.on('authorized', () => {
 // .then(res => console.log(res))
 // .catch(err => console.log(err));
 
-(async () => {
-    try {
-        var data = await app.get('arrivals', '00874', 1);
-        console.log("Good");
-        data = await app.get('arrivals', '00874', 1);
-        console.log("Good");
-    }
-    catch(ex)
-    {
-        console.log(ex);
-    }
-})();

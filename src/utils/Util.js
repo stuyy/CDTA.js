@@ -60,7 +60,7 @@ module.exports.validate = function(field, ...args)
 }
 module.exports.createObject = async function(type, response, token)
 {
-    if(type == FIELDS.ARRIVALS) // Ifroute is Arrival, create and return a BusStop object with arrivals collection set.
+    if(type === FIELDS.ARRIVALS) // Ifroute is Arrival, create and return a BusStop object with arrivals collection set.
     {   
         var routeIds = new Set();
         const arrivals = response.arrivals;
@@ -75,5 +75,9 @@ module.exports.createObject = async function(type, response, token)
             
         }
         return new BusStop(response.stop_id, response.stop_name, response.schedule_type, new Collection(arrivalsArray));
+    }
+    else if(type === FIELDS.ROUTES)
+    {
+        console.log("Fetching Routes.");
     }
 }

@@ -22,12 +22,10 @@ class CDTAClient extends EventEmitter {
     }
     async get(field, ...args)
     {   
-        console.log(args);
         var flag = utils.validate(field, ...args);
         if(flag)
         {
             var response = await Request.get(field, this.token, args);
-            console.log(response);
             return response;
         }
         else 

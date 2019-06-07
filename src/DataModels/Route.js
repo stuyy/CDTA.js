@@ -19,7 +19,6 @@ module.exports = class Route {
      * @param {*} routeColor 
      * @param {*} routeTextColor 
      * @param {*} serviceDays 
-     * @param {*} arrivals 
      */
     constructor(routeId, routeName, routeType, description, routeUrl, scheduleUrl, mapKmlUrl, mapImageUrl, routeColor, routeTextColor, serviceDays, arrivals = null)
     {
@@ -34,7 +33,6 @@ module.exports = class Route {
         this.routeColor = routeColor;
         this.routeTextColor = routeTextColor;
         this.serviceDays = serviceDays;
-        this.arrivals = new Collection(arrivals);
         Object.freeze(this);
     }
 }

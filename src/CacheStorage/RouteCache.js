@@ -1,9 +1,8 @@
-const Cache = require('./Cache');
 
-class RouteCache extends Cache {
-    constructor(iterable)
+class RouteCache extends Map {
+    constructor()
     {
-        super(iterable);
+        
     }
 }
 

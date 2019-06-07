@@ -3,7 +3,6 @@ const Collection = require('../utils/Collection');
 
 module.exports = class BusStop {
     /**
-     * 
      * @param { the id of the Bus Stop } stopId 
      * @param { the name of the Bus Stop } stopName 
      * @param { the schedule type } type 
