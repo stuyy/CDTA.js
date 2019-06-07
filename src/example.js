@@ -8,7 +8,8 @@ const bodyParser = require('body-parser');
 express_app.use(bodyParser.json());
 express_app.get('/', async (req, res) => {
     try {
-        var data = await app.get('routes');
+        var data = await app.get('routes', 114);
+        data = await app.get('routes');
         res.json(data);
     }
     catch(ex)

@@ -47,22 +47,33 @@ module.exports = class RequestHandler {
                     }
                 }
                 else {
-                    console.log("Cache Exists.");
+                    console.log("Cache Exists. Trying to retrieve route: " + params[0]);
                     // Check if user provided a parameter or wanted all routes.
                     if(params.length === 0) // If no params, we need to 
                     {
-                        
+                        if(!this.cacheManager.isAllCached)
+                        {
+                            console.log("All routes were NOT cached.");
+                            const raw = await fetch(endpoint);
+                            const response = raw.status === 200 ? JSON.parse(await raw.text()) : null;
+                            var routeMap = await utils.createObject(field, response);
+                            this.cacheManager.routeCacheManager = routeMap;
+                            this.cacheManager.isAllCached = true;
+                            Object.freeze(this.cacheManager.routeCacheManager);
+                            console.log("Object Frozen");
+                            console.log(typeof this.cacheManager.routeCacheManager);
+                            // Now all routes are cached.
+                        }
                         return [...this.cacheManager.routeCacheManager]; // Destruct the map into an array of [key, value] pairs.
                     }
-                    else {
+                    else
                         return this.cacheManager.routeCacheManager.get(params[0].toString());
-                    }
                 }
             }
         }
         catch(ex)
         {
-
+            console.log(ex);
         }
         /*
         try {
