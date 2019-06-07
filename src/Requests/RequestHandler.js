@@ -29,21 +29,15 @@ module.exports = class RequestHandler {
         try {
             if(field === FIELDS.ROUTES)
             {
-                console.log(params);
-                if(args.length === 0) // Trying to fetch all routes.
+                if(this.cacheManager === undefined || this.cacheManager === null)
                 {
-                    
+                    this.cacheManager = new CacheManager();
                     const raw = await fetch(endpoint);
-                    const response = raw.status === 200 ? JSON.parse(await raw.text()) : 'null';
-                    console.log("YO");
-                    console.log(response);
-                    if(this.cacheManager === undefined || this.cacheManager === null)
-                    {
-                        this.cacheManager = new CacheManager();
-                    }
+                    const response = raw.status === 200 ? JSON.parse(await raw.text()) : null;
+                    var object = utils.createObject(field, response);
                 }
                 else {
-                    // Check the chache to see if the route id exists. If it does, retrieve and return.
+                    
                 }
             }
         }

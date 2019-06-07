@@ -13,7 +13,7 @@ app.on('authorized', () => {
 // .then(res => console.log(res))
 // .catch(err => console.log(err));
 
-app.get('routes', 12)
+app.get('routes')
 .then(res => console.log(res))
 .catch(err => console.log(err));
 

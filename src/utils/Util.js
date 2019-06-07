@@ -58,8 +58,9 @@ module.exports.validate = function(field, ...args)
             }
     }
 }
-module.exports.createObject = async function(type, response, token)
+module.exports.createObject = async function(type, response)
 {
+    console.log(type);
     if(type === FIELDS.ARRIVALS) // Ifroute is Arrival, create and return a BusStop object with arrivals collection set.
     {   
         var routeIds = new Set();
@@ -78,6 +79,11 @@ module.exports.createObject = async function(type, response, token)
     }
     else if(type === FIELDS.ROUTES)
     {
-        console.log("Fetching Routes.");
+        console.log("YO");
+        for(var route in response.routes)
+        {
+            console.log("?");
+            console.log(response.routes[route].route_id);
+        }
     }
 }
