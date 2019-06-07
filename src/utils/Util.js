@@ -59,9 +59,8 @@ module.exports.validate = function(field, ...args)
             }
     }
 }
-module.exports.createObject = function(type, response)
+module.exports.createObject = async function(type, response)
 {
-    console.log(type);
     if(type === FIELDS.ARRIVALS) // Ifroute is Arrival, create and return a BusStop object with arrivals collection set.
     {   
         var routeIds = new Set();

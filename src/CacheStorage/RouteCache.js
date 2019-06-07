@@ -1,8 +1,8 @@
 
 class RouteCache extends Map {
-    constructor()
+    constructor(iterable)
     {
-        
+        super(iterable);
     }
 }
 

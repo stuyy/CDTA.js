@@ -24,7 +24,6 @@ module.exports = class RequestHandler {
         var [params] = [...args]
         params = params.concat(token);
         var endpoint = utils.getEndpointURL(BASE_URL, field, params);
-        console.log(endpoint);
         [params] = [...args] // Reset params array to the args array
         try {
             if(field === FIELDS.ROUTES)
@@ -34,11 +33,20 @@ module.exports = class RequestHandler {
                     this.cacheManager = new CacheManager();
                     const raw = await fetch(endpoint);
                     const response = raw.status === 200 ? JSON.parse(await raw.text()) : null;
-                    var routeMap = utils.createObject(field, response);
-                    console.log(object);
+                    var routeMap = await utils.createObject(field, response);
+                    this.cacheManager.routeCacheManager = routeMap;
+                    return this.cacheManager.routeCacheManager;
                 }
                 else {
-                    console.log("Cache exists.");
+                    console.log("Cache Exists.");
+                    // Check if user provided a parameter or wanted all routes.
+                    if(params.length === 0)
+                    {
+                        console.log("No params");
+                    }
+                    else {
+                        return this.cacheManager.routeCacheManager.get(params[0].toString());
+                    }
                 }
             }
         }

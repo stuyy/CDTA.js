@@ -6,25 +6,12 @@
  */
 
 const RouteCache = require('./RouteCache');
-module.exports = class CacheManager extends Map {
-    constructor(iterable)
+module.exports = class CacheManager {
+    constructor()
     {
-        super(iterable);
-        this._routeCacheManager = null;
-    }
-
-    set routeCacheManager(routes)
-    {
-        if(this._routeCacheManager === null || this._routeCacheManager === undefined)
-        {
-            this._routeCacheManager = new RouteCache();
-        }
-        else {
-            throw new Exception("RouteCache already initialized.");
-        }
-    }
-    get routeCacheManager()
-    {
-        return this._routeCacheManager;
+        Object.defineProperty(this, 'routeCacheManager', {
+            set (routes) { this._routeCacheManager = new RouteCache(routes); },
+            get () { return this._routeCacheManager; }
+        });
     }
 }
