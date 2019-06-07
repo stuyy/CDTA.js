@@ -9,8 +9,7 @@ express_app.use(bodyParser.json());
 express_app.get('/', async (req, res) => {
     try {
         var data = await app.get('routes');
-        console.log(data);
-        res.json(Array.from(data));
+        res.json(data);
     }
     catch(ex)
     {

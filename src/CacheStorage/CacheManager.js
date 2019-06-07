@@ -13,5 +13,9 @@ module.exports = class CacheManager {
             set (routes) { this._routeCacheManager = new RouteCache(routes); },
             get () { return this._routeCacheManager; }
         });
+        Object.defineProperty(this, 'isAllCached', {
+            set(flag) { this._isAllCached = flag; },
+            get() { return this._isAllCached; }
+        });
     }
 }

@@ -34,10 +34,17 @@ module.exports = class RequestHandler {
                     const raw = await fetch(endpoint);
                     const response = raw.status === 200 ? JSON.parse(await raw.text()) : null;
                     var routeMap = await utils.createObject(field, response);
+                    this.cacheManager.routeCacheManager = routeMap;
                     if(params.length === 0) {
-                        this.cacheManager.routeCacheManager = routeMap;
+                        this.cacheManager.isAllCached = true;
+                        Object.freeze(this.cacheManager); // Freeze Object to prevent future modification.
+                        return [...this.cacheManager.routeCacheManager];
                     }
-                    return routeMap;
+                    else {  
+                        // User only requested one route on their first request. 
+                        this.cacheManager.isAllCached = false;
+                        return this.cacheManager.routeCacheManager; // Returns a map.
+                    }
                 }
                 else {
                     console.log("Cache Exists.");
@@ -45,6 +52,7 @@ module.exports = class RequestHandler {
                     if(params.length === 0) // If no params, we need to 
                     {
                         
+                        return [...this.cacheManager.routeCacheManager]; // Destruct the map into an array of [key, value] pairs.
                     }
                     else {
                         return this.cacheManager.routeCacheManager.get(params[0].toString());
