@@ -11,9 +11,17 @@ module.exports = class CacheManager {
     {
         Object.defineProperty(this, 'routeCacheManager', {
             set (routes) { 
-                console.log("Setting the routes.");
-                console.log(routes);
-                this._routeCacheManager = new RouteCache(routes);
+                if(routes instanceof Map)
+                {
+                    console.log(routes + " is a Map!")
+                    this._routeCacheManager = new RouteCache(routes);
+                }
+                else if(routes instanceof Object)
+                {
+                    console.log(routes + " is an Object!")
+                    this._routeCacheManager = new RouteCache();
+                    this._routeCacheManager.set(routes.route_id, routes);
+                }
              },
             get () { return this._routeCacheManager; }
         });
