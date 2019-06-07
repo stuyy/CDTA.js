@@ -48,7 +48,7 @@ module.exports = class RequestHandler {
         }
         try {
             const raw = await fetch(endpoint);
-            const response = JSON.parse((await (await fetch(endpoint)).text()));
+            const response = JSON.parse(await raw.text());
             console.log(response);
             var object = await utils.createObject(field, response, token);
             
