@@ -2,6 +2,7 @@ const EventEmitter = require('events');
 const Request = require('./Requests/RequestHandler');
 const { BASE_URL, FIELDS } = require('./utils/Constants');
 const utils = require('./utils/Util');
+
 class CDTAClient extends EventEmitter {
     constructor(token = null)
     {
@@ -32,5 +33,4 @@ class CDTAClient extends EventEmitter {
             return Promise.reject('no');
     }
 }
-
 module.exports = CDTAClient;
