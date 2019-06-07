@@ -103,7 +103,6 @@ module.exports.createObject = async function(type, response)
             delete routeData.route_direction_uri;
             delete routeData.route_schedule_uri;
             return Object.assign(newRoute, routeData);
-            
         }
     }
 }
